@@ -23,16 +23,18 @@ public class Money {
     }
 
     Money addMoney(Money money) {
-        return new Money(this.money + money.getMoney(), this.currency);
+        isNotEqualCurrency(money);
+        return new Money(decimalPointRound(this.money + money.getMoney()), this.currency);
     }
 
     Money subMoney(Money money) {
+        isNotEqualCurrency(money);
         if (this.money < money.getMoney()) {
             throw new IllegalArgumentException(
                 "sub result is not negative money. money : " + this.money + " < " +
                     money.getMoney());
         }
-        return new Money(this.money - money.getMoney(), this.currency);
+        return new Money(decimalPointRound(this.money - money.getMoney()), this.currency);
     }
 
 
@@ -70,4 +72,7 @@ public class Money {
         return Objects.hash(money);
     }
 
+    public static double decimalPointRound(double money) {
+        return Math.round(money*100)/100.0;
+    }
 }
