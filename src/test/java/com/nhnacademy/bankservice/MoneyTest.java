@@ -1,8 +1,10 @@
 package com.nhnacademy.bankservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -56,7 +58,7 @@ public class MoneyTest {
 
     @DisplayName("1000WON + 1000DOL = Exception")
     @Test
-    void isNotEqualCurrency() {
+    void isNotEqualCurrencyTest() {
         Money won = Money.won(1000L);
         Money dollar = Money.dollar(1000L);
 
@@ -64,5 +66,37 @@ public class MoneyTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Not Equal Currency");
 
+    }
+
+    @DisplayName("5$ - 6$ = Exception")
+    @Test
+    void subDollarFailTest() {
+        Money dollar1 = Money.dollar(5L);
+        Money dollar2 = Money.dollar(6L);
+
+        assertThatThrownBy(() -> dollar1.subMoney(dollar2))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("sub result is not negative money.");
+
+    }
+
+    @DisplayName("10$ - 6$ = 4$")
+    @Test
+    void subDollarSuccessTest() {
+        Money dollar1 = Money.dollar(10L);
+        Money dollar2 = Money.dollar(6L);
+
+        assertThat(dollar1.subMoney(dollar2).getMoney()).isEqualTo(4);
+    }
+
+    @Test
+    void inputDecimalPointTest() {
+        assertThatCode(() -> Money.dollar(5.25)).doesNotThrowAnyException();
+    }
+
+    @DisplayName("5.25$ + 5.25$ = 10.50$ (소숫점 이하 2자리)")
+    @Test
+    void addMoneyAboutDecimalPointTest() {
+        Money dollar2 = Money.dollar(5.25);
     }
 }

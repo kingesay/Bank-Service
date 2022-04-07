@@ -3,10 +3,10 @@ package com.nhnacademy.bankservice;
 import java.util.Objects;
 
 public class Money {
-    private final long money;
+    private final double money;
     private Currency currency;
 
-    public Money(long money, Currency currency) {
+    public Money(double money, Currency currency) {
         if (money < 0) {
             throw new IllegalArgumentException("money is not negative. negative money : " + money);
         }
@@ -14,7 +14,7 @@ public class Money {
         this.currency = currency;
     }
 
-    static Money dollar(long money) {
+    static Money dollar(double money) {
         return new Money(money, Currency.DOLLAR);
     }
 
@@ -26,8 +26,31 @@ public class Money {
         return new Money(this.money + money.getMoney(), this.currency);
     }
 
-    long getMoney() {
+    Money subMoney(Money money) {
+        if (this.money < money.getMoney()) {
+            throw new IllegalArgumentException(
+                "sub result is not negative money. money : " + this.money + " < " +
+                    money.getMoney());
+        }
+        return new Money(this.money - money.getMoney(), this.currency);
+    }
+
+
+    double getMoney() {
         return this.money;
+    }
+
+    public void isNotEqualCurrency(Money money) {
+        if (!this.currency.equals(money.getCurrency())) {
+            throw new IllegalArgumentException("Not Equal Currency. "
+                + this.currency
+                + " "
+                + money.getCurrency());
+        }
+    }
+
+    private Currency getCurrency() {
+        return this.currency;
     }
 
     @Override
@@ -47,16 +70,4 @@ public class Money {
         return Objects.hash(money);
     }
 
-    public void isNotEqualCurrency(Money money) {
-        if (!this.currency.equals(money.getCurrency())) {
-            throw new IllegalArgumentException("Not Equal Currency. "
-                + this.currency
-                + " "
-                + money.getCurrency());
-        }
-    }
-
-    private Currency getCurrency() {
-        return this.currency;
-    }
 }
