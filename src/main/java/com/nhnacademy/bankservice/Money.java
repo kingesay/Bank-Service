@@ -51,7 +51,7 @@ public class Money {
         }
     }
 
-    private Currency getCurrency() {
+    public Currency getCurrency() {
         return this.currency;
     }
 

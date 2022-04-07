@@ -123,4 +123,6 @@ public class MoneyTest {
 
         assertThat(dollar3.subMoney(dollar4).getMoney()).isEqualTo(1);
     }
+
+
 }
