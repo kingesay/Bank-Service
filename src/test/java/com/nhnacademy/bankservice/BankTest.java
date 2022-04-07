@@ -1,5 +1,6 @@
 package com.nhnacademy.bankservice;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -49,6 +50,21 @@ public class BankTest {
         assertThat(resultMoney.getMoney()).isEqualTo(5250);
         assertThat(resultMoney.getCurrency()).isEqualTo(Currency.WON);
     }
+    @DisplayName("달러 -> 원화: 5원 이상 -> 10원으로 반올림")
+    @Test
+    void roundOrNotTest() {
+        assertThat(bank.roundOrNot(5)).isEqualTo(10);
+        assertThat(bank.roundOrNot(1225)).isEqualTo(1230);
+        assertThat(bank.roundOrNot(1222)).isEqualTo(1222);
+    }
 
 
+
+//    @DisplayName("달러 -> 원화: 5원 이상 -> 10원으로 반올림")
+//    @Test
+//    void exchangeDollarForWon_Round() {
+//        Money money =Money.dollar(0.005);
+//       assertThat(bank.exchangeDollarForWon(money.getMoney()).getMoney()).isEqualTo(10);
+//
+//    }
 }

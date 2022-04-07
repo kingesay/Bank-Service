@@ -18,7 +18,7 @@ public class Money {
         return new Money(money, Currency.DOLLAR);
     }
 
-    static Money won(long money) {
+    static Money won(double money) {
         return new Money(money, Currency.WON);
     }
 
