@@ -1,5 +1,6 @@
 package com.nhnacademy.bankservice;
 
+import static com.nhnacademy.bankservice.Currency.EURO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -110,6 +111,7 @@ public class MoneyTest {
         assertThat(Money.decimalPointRound(5.2566)).isEqualTo(5.26);
 
     }
+
     @DisplayName("5.2455$ + 5.2455$ = 10.49$ (소숫점 이하 2자리)")
     @Test
     void decimalPointRoundAddAndSubTest() {
@@ -124,5 +126,32 @@ public class MoneyTest {
         assertThat(dollar3.subMoney(dollar4).getMoney()).isEqualTo(1);
     }
 
+    @DisplayName("다른 통화(ex: 유로화) 추가해보기 (환율은 임의대로)")
+    @Test
+    void euroTest() {
+        Money euro = Money.euro(1);
+        assertThat(euro.getCurrency()).isEqualTo(EURO);
 
+    }
+
+    @DisplayName("유로 + 테스트")
+    @Test
+    void addMoney_EuroTest() {
+        Money money1 = Money.euro(1);
+        Money money2 = Money.euro(2);
+
+        assertThat(money1.addMoney(money2).getMoney()).isEqualTo(3);
+    }
+
+    @DisplayName("유로 - 테스트")
+    @Test
+    void subMoney_EuroTest() {
+        Money money1 = Money.euro(1);
+        Money money2 = Money.euro(2);
+
+        assertThat(money2.subMoney(money1).getMoney()).isEqualTo(1);
+        assertThatThrownBy(()->money1.subMoney(money2))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("negative");
+    }
 }

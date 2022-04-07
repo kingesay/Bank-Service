@@ -6,7 +6,7 @@ public class Bank {
     }
 
     Money exchangeDollarForWon(double money) {
-        return Money.won(roundOrNotDollarForWon((int) (money * 1000)));
+        return Money.won(roundOrNotWon((int) (money * 1000)));
     }
 
     // 해당 코드를 테스트 성공후에 아래에 예쁘게 리팩토링 했습니다 ^^
@@ -19,7 +19,7 @@ public class Bank {
     //        return i+result;
     //    }
 
-    public double roundOrNotDollarForWon(int money) {
+    public double roundOrNotWon(int money) {
         if (money % 10 >= 5) {
             return (money / 10 * 10) + 10;
         }
@@ -27,8 +27,8 @@ public class Bank {
         return money;
     }
 
-    double roundOrNotWonForDollar(double money){
-        return Math.round(money*100)/100.0;
+    double roundOrNotDollar(double money) {
+        return roundOrNotWon((int) (money * 1000)) / 1000;
     }
 
 }

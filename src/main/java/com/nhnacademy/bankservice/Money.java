@@ -22,6 +22,10 @@ public class Money {
         return new Money(money, Currency.WON);
     }
 
+    static Money euro(double money) {
+        return new Money(money, Currency.EURO);
+    }
+
     Money addMoney(Money money) {
         isNotEqualCurrency(money);
         return new Money(decimalPointRound(this.money + money.getMoney()), this.currency);
@@ -73,6 +77,6 @@ public class Money {
     }
 
     public static double decimalPointRound(double money) {
-        return Math.round(money*100)/100.0;
+        return Math.round(money * 100) / 100.0;
     }
 }

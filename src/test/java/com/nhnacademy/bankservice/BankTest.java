@@ -53,9 +53,9 @@ public class BankTest {
     @DisplayName("달러 -> 원화: 5원 이상 -> 10원으로 반올림")
     @Test
     void roundOrNotDollarForWonTest() {
-        assertThat(bank.roundOrNotDollarForWon(5)).isEqualTo(10);
-        assertThat(bank.roundOrNotDollarForWon(1225)).isEqualTo(1230);
-        assertThat(bank.roundOrNotDollarForWon(1222)).isEqualTo(1222);
+        assertThat(bank.roundOrNotWon(5)).isEqualTo(10);
+        assertThat(bank.roundOrNotWon(1225)).isEqualTo(1230);
+        assertThat(bank.roundOrNotWon(1222)).isEqualTo(1222);
     }
 
     @DisplayName("달러 -> 원화: 5원 이상 -> 10원으로 반올림")
@@ -69,9 +69,8 @@ public class BankTest {
     @DisplayName("원화 -> 달러: $0.005 이상 -> $0.01 반올림")
     @Test
     void roundOrNotWonForDollarTest() {
-        assertThat(bank.roundOrNotWonForDollar(0.005)).isEqualTo(0.01);
-        assertThat(bank.roundOrNotWonForDollar(1.222)).isEqualTo(1.222);
-//        assertThat(bank.roundOrNotWonForDollar(1.225)).isEqualTo(1.230);
+        assertThat(bank.roundOrNotDollar(0.005)).isEqualTo(0.01);
+        assertThat(bank.roundOrNotDollar(1.222)).isEqualTo(1.222);
+        assertThat(bank.roundOrNotDollar(1.225)).isEqualTo(1.230);
     }
-
 }
