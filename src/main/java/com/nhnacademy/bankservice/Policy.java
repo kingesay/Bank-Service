@@ -1,5 +1,9 @@
 package com.nhnacademy.bankservice;
 
 public interface Policy {
-    Money getExchangeMoney(double money);
+    public Money getExchangeMoney();
+
+    default double round(double money){
+        return ((int)(Math.round(money*100)))/100.0;
+    }
 }

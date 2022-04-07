@@ -14,15 +14,15 @@ public class Money {
         this.currency = currency;
     }
 
-    static Money dollar(double money) {
+    public static Money dollar(double money) {
         return new Money(money, Currency.DOLLAR);
     }
 
-    static Money won(double money) {
+    public static Money won(double money) {
         return new Money(money, Currency.WON);
     }
 
-    static Money euro(double money) {
+    public static Money euro(double money) {
         return new Money(money, Currency.EURO);
     }
 

@@ -73,4 +73,44 @@ public class BankTest {
         assertThat(bank.roundOrNotDollar(1.222)).isEqualTo(1.222);
         assertThat(bank.roundOrNotDollar(1.225)).isEqualTo(1.230);
     }
+
+    @DisplayName("1 DOLLAR -> 1000 WON[수수료(0.1%) 제외 후 금액 : 999 WON], 1.3[수수료(10%) 제외 후 금액 : 1.17 EURO]")
+    @Test
+    void exchangeMoneyTest_Dollar() {
+        Money dollarMoney = Money.dollar(1);
+
+        Money exchangedMoney = bank.exchange(dollarMoney, Currency.WON);
+        //assertThat(exchangedMoney.getMoney()).isEqualTo(1000);
+        assertThat(exchangedMoney.getMoney()).isEqualTo(999);
+
+        Money exchangedMoney2 = bank.exchange(dollarMoney, Currency.EURO);
+        //assertThat(exchangedMoney2.getMoney()).isEqualTo(1.3);
+        assertThat(exchangedMoney2.getMoney()).isEqualTo(1.17);
+    }
+
+    @DisplayName("1 EURO -> 1300 WON[수수료(0.1%) 제외 후 금액 : 1298.7WON], 0.77 DOLLAR[수수료(20%) 제외 후 금액 : WON]")
+    @Test
+    void exchangeMoneyTest_EURO() {
+        Money euroMoney = Money.euro(1);
+
+        Money exchangedMoney = bank.exchange(euroMoney, Currency.WON);
+        //assertThat(exchangedMoney.getMoney()).isEqualTo(1300);
+        assertThat(exchangedMoney.getMoney()).isEqualTo(1298.7);
+
+    }
+
+    @DisplayName("1000 WON -> 1 DOLLAR[수수료(5%) 제외 후 금액 : 0.95DOLLAR], 0.77 EURO[수수료(50%) 제외 후 금액 : 0.38EURO]")
+    @Test
+    void exchangeMoneyTest_WON() {
+        Money wonMoney = Money.won(1000);
+
+        Money exchangedMoney = bank.exchange(wonMoney, Currency.DOLLAR);
+        //assertThat(exchangedMoney.getMoney()).isEqualTo(1);
+        assertThat(exchangedMoney.getMoney()).isEqualTo(0.95);
+
+        Money exchangedMoney2 = bank.exchange(wonMoney, Currency.EURO);
+        //assertThat(exchangedMoney2.getMoney()).isEqualTo(0.77);
+        assertThat(exchangedMoney2.getMoney()).isEqualTo(0.38);
+    }
+
 }

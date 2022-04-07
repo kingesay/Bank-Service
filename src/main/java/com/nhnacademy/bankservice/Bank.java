@@ -31,4 +31,7 @@ public class Bank {
         return roundOrNotWon((int) (money * 1000)) / 1000;
     }
 
+    public Money exchange(Money myMoney, Currency currency) {
+        return ExchangeCenter.pleaseExchange(myMoney, currency);
+    }
 }
