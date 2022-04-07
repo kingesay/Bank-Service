@@ -3,33 +3,30 @@ package com.nhnacademy.bankservice;
 import java.util.Objects;
 
 public class Money {
-    long money = 0;
-    String currency = "";
-    public Money(long money) {
-        if(money<0){
-            throw new IllegalArgumentException("money is not negative. negative money : " + money);
-        }
-        this.money = money;
-    }
+    private final long money;
+    private Currency currency;
 
-    public Money(long money, String currency) {
-        if(money<0){
+    public Money(long money, Currency currency) {
+        if (money < 0) {
             throw new IllegalArgumentException("money is not negative. negative money : " + money);
         }
         this.money = money;
         this.currency = currency;
     }
 
-    static Money dollar(long money){
-        return null;
+    static Money dollar(long money) {
+        return new Money(money, Currency.DOLLAR);
     }
 
-    Money addMoney(Money money){
-
-        return new Money(this.money + money.getMoney());
+    static Money won(long money) {
+        return new Money(money, Currency.WON);
     }
 
-    long getMoney(){
+    Money addMoney(Money money) {
+        return new Money(this.money + money.getMoney(), this.currency);
+    }
+
+    long getMoney() {
         return this.money;
     }
 
@@ -50,4 +47,16 @@ public class Money {
         return Objects.hash(money);
     }
 
+    public void isNotEqualCurrency(Money money) {
+        if (!this.currency.equals(money.getCurrency())) {
+            throw new IllegalArgumentException("Not Equal Currency. "
+                + this.currency
+                + " "
+                + money.getCurrency());
+        }
+    }
+
+    private Currency getCurrency() {
+        return this.currency;
+    }
 }
