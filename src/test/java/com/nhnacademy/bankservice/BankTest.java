@@ -1,6 +1,5 @@
 package com.nhnacademy.bankservice;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -50,21 +49,29 @@ public class BankTest {
         assertThat(resultMoney.getMoney()).isEqualTo(5250);
         assertThat(resultMoney.getCurrency()).isEqualTo(Currency.WON);
     }
+
     @DisplayName("달러 -> 원화: 5원 이상 -> 10원으로 반올림")
     @Test
-    void roundOrNotTest() {
-        assertThat(bank.roundOrNot(5)).isEqualTo(10);
-        assertThat(bank.roundOrNot(1225)).isEqualTo(1230);
-        assertThat(bank.roundOrNot(1222)).isEqualTo(1222);
+    void roundOrNotDollarForWonTest() {
+        assertThat(bank.roundOrNotDollarForWon(5)).isEqualTo(10);
+        assertThat(bank.roundOrNotDollarForWon(1225)).isEqualTo(1230);
+        assertThat(bank.roundOrNotDollarForWon(1222)).isEqualTo(1222);
     }
 
+    @DisplayName("달러 -> 원화: 5원 이상 -> 10원으로 반올림")
+    @Test
+    void exchangeDollarForWon_Round() {
+        assertThat(bank.exchangeDollarForWon(0.005).getMoney()).isEqualTo(10);
+        assertThat(bank.exchangeDollarForWon(1.222).getMoney()).isEqualTo(1222);
+        assertThat(bank.exchangeDollarForWon(1.225).getMoney()).isEqualTo(1230);
+    }
 
+    @DisplayName("원화 -> 달러: $0.005 이상 -> $0.01 반올림")
+    @Test
+    void roundOrNotWonForDollarTest() {
+        assertThat(bank.roundOrNotWonForDollar(0.005)).isEqualTo(0.01);
+        assertThat(bank.roundOrNotWonForDollar(1.222)).isEqualTo(1.222);
+//        assertThat(bank.roundOrNotWonForDollar(1.225)).isEqualTo(1.230);
+    }
 
-//    @DisplayName("달러 -> 원화: 5원 이상 -> 10원으로 반올림")
-//    @Test
-//    void exchangeDollarForWon_Round() {
-//        Money money =Money.dollar(0.005);
-//       assertThat(bank.exchangeDollarForWon(money.getMoney()).getMoney()).isEqualTo(10);
-//
-//    }
 }

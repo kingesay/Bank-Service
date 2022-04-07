@@ -6,15 +6,29 @@ public class Bank {
     }
 
     Money exchangeDollarForWon(double money) {
-        return  Money.won(roundOrNot((int)money*1000));
+        return Money.won(roundOrNotDollarForWon((int) (money * 1000)));
     }
 
-    public double roundOrNot(int i) {
-        int result = i%10; // 1222 2
-        i/=10; // 122
-        i*=10; // 1220
-        if(result>=5)
-            return i + 10;
-        return i+result;
+    // 해당 코드를 테스트 성공후에 아래에 예쁘게 리팩토링 했습니다 ^^
+    //    public double roundOrNot(int i) {
+    //        int result = i%10; // 1222 2
+    //        i/=10; // 122
+    //        i*=10; // 1220
+    //        if(result>=5)
+    //            return i + 10;
+    //        return i+result;
+    //    }
+
+    public double roundOrNotDollarForWon(int money) {
+        if (money % 10 >= 5) {
+            return (money / 10 * 10) + 10;
+        }
+
+        return money;
     }
+
+    double roundOrNotWonForDollar(double money){
+        return Math.round(money*100)/100.0;
+    }
+
 }
